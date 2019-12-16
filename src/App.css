@@ -1,0 +1,57 @@
+.website-header {
+    height: 8rem;
+}
+
+.theme-color {
+    background-color: #274472;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.vertical-middle {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.jnu-logo {
+    width: 6rem;
+    height: 6rem;
+}
+
+.title-paragraph {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
+    display: block;
+}
+
+.header-block {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: 1rem;
+}
+
+.website-footer {
+    height: 6rem;
+}
+
+.footer-text {
+    color: #fff;
+    text-align: center;
+    margin: 0;
+}
+
+.nav-bar {
+    background-color: #f0eeea;
+}
+
+.nav-item {
+    min-width: 6rem;
+    display: inline-block;
+}
