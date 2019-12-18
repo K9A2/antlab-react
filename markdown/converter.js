@@ -36,5 +36,22 @@ exports.getTheNameOfAllFiles = function(parentDirPath) {
  */
 exports.loadMarkdownFile = function(filePath) {
   // YAML 头信息会放在返回值的 '_content' 字段中
-  return yaml.loadFront(fs.readFileSync(filePath, 'utf-8'));
+  const yamlLoadedFile = yaml.loadFront(fs.readFileSync(filePath, 'utf-8'));
+
+  // parse the date into formatted time string
+  const postDate = new Date(yamlLoadedFile.date);
+  const year = postDate.getFullYear();
+  const month = postDate.getMonth() < 10 ? `0${postDate.getMonth()}` : postDate.getMonth();
+  const day = postDate.getDay() < 10 ? `0${postDate.getDay()}` : postDate.getDay();
+
+  // remove the first line break character ('\n')
+  let markdownContent = yamlLoadedFile.__content;
+  markdownContent = markdownContent.replace(/\n/, '');
+
+  return {
+    title: yamlLoadedFile.title,
+    top: yamlLoadedFile.top,
+    date: `${year}-${month}-${day}`,
+    content: markdownContent,
+  };
 };
