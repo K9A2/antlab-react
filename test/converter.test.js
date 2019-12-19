@@ -9,7 +9,7 @@ describe('it should convert markdown file to html file', function() {
   });
 
   it('should return the names of folders under project root', function() {
-    const expected = ['.git', '.idea', 'config', 'markdown', 'node_modules', 'src', 'test'];
+    const expected = ['.git', 'config', 'markdown', 'node_modules', 'src', 'test'];
     const actual = converter.getTheNameOfAllChildFolders('./');
     assert.deepStrictEqual(actual, expected);
   });
