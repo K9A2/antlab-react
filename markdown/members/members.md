@@ -1,6 +1,6 @@
 ---
-title:
-date:
+title: 实验室成员简介
+date: 2019-12-19
 top: false
 ---
 
