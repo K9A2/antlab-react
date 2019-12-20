@@ -1,4 +1,6 @@
 const assert = require('assert');
+const fs = require('fs');
+
 const converter = require('../markdown/converter');
 
 describe('it should convert markdown file to html file', function () {
@@ -28,7 +30,7 @@ describe('it should convert markdown file to html file', function () {
       content: '2019年9月，实验室迎来新成员，分别是梁文杰、叶子豪、郑雨昕，欢迎三位新同学加入实验室的大家庭。\n\n' +
         '![实验室聚餐合照](./files/a0131d42-4c6c-477f-8669-17125fbc0817.jpg)\n',
     };
-    const actual = converter.loadMarkdownFile('./markdown/activities/2019年9月迎新聚餐.md');
+    const actual = converter.loadMarkdownFile(fs.readFileSync('./markdown/activities/2019年9月迎新聚餐.md', 'utf-8'));
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -46,13 +48,13 @@ describe('it should convert markdown file to html file', function () {
     assert.deepStrictEqual(actual, expected);
   });
 
-  it('should print all markdown file object', function () {
+  it('should convert all specificed markdown files into list of objects with yaml header', function () {
     const markdownFileList = [
-      '实验室硕士生林晋霆的论文被国际期刊Computer Networks录用.md',
+      '实验室长期招收硕士研究生和有研究兴趣的本科生.md',
+      '实验室研究生荣获研究生2020年度国家研究生奖学金.md',
       '实验室硕士生张羽翔的论文被国际期刊IEEE Transactions on Network and Service Management录用.md',
+      '实验室硕士生林晋霆的论文被国际期刊Computer Networks录用.md',
       '实验室研究生荣获研究生2019年度国家研究生奖学金.md',
-      '实验室研究生荣获研究生2020年度国家研究生奖学金.md',
-      '实验室研究生荣获研究生2020年度国家研究生奖学金.md',
     ];
     const expect = [
       {
@@ -95,7 +97,11 @@ describe('it should convert markdown file to html file', function () {
         top: false,
       },
     ];
-    const actual = converter.buildFileObjectList('./markdown/announcements/');
+    const actual = [];
+    markdownFileList.forEach(function(fileName) {
+      const fileContent = fs.readFileSync('./markdown/announcements/' + fileName);
+      actual.push(converter.loadMarkdownFile(fileContent));
+    });
     assert.deepStrictEqual(actual, expect);
   });
 });

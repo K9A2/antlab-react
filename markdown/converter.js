@@ -39,12 +39,12 @@ exports.getTheNameOfAllFiles = function(parentDirPath) {
 /**
  * 以  UTF-8 方式读取带 YAML 头的 Markdown 源文件
  *
- * @param {string} filePath Markdown 源文件路径
+ * @param {string} fileContentText Markdown 源文件的文字内容
  * @returns {object} 解析 YAML 头之后的 Markdown 源文件
  */
-exports.loadMarkdownFile = function(filePath) {
+exports.loadMarkdownFile = function(fileContentText) {
   // YAML 头信息会放在返回值的 '_content' 字段中
-  const yamlLoadedFile = yaml.loadFront(fs.readFileSync(filePath, 'utf-8'));
+  const yamlLoadedFile = yaml.loadFront(fileContentText);
 
   // parse the date into formatted time string
   const postDate = `${yamlLoadedFile.date}`;
@@ -130,7 +130,7 @@ exports.buildFileObjectList = function(filePath) {
   const markdownFileList = [];
   markdownFileNames.forEach(function(fileName) {
     markdownFileList.push(
-      module.exports.loadMarkdownFile(filePath + fileName)
+      module.exports.loadMarkdownFile(fs.readFileSync(filePath + fileName, 'utf-8'))
     );
   });
 
