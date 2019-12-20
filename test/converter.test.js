@@ -11,8 +11,8 @@ describe('it should convert markdown file to html file', function () {
   });
 
   it('should return the names of folders under project root', function () {
-    const expected = ['.git', 'config', 'markdown', 'node_modules', 'src', 'test'];
-    const actual = converter.getTheNameOfAllChildFolders('./');
+    const expected = ['activities', 'announcements', 'introductions', 'members'];
+    const actual = converter.getTheNameOfAllChildFolders('./markdown/');
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -103,5 +103,9 @@ describe('it should convert markdown file to html file', function () {
       actual.push(converter.loadMarkdownFile(fileContent));
     });
     assert.deepStrictEqual(actual, expect);
+  });
+
+  it('should convert all markdown files into json string in .txt file', function() {
+    converter.convertAndCopy();
   });
 });

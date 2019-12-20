@@ -165,3 +165,41 @@ exports.parseTimeStringIntoDateObject = function(timeString) {
     day: params[2],
   };
 };
+
+/**
+ * 把 markdown 文件夹下的 Markdown 文件写入到输出文件夹的 txt 文件中，并把相关附属
+ * 文件也一并复制到输出文件夹中
+ */
+exports.convertAndCopy = function() {
+  // 要转换的文件夹有 activities, announcements, introductions, members 四个
+  const posts = {
+    activities: exports.buildFileObjectList('./markdown/activities/'),
+    announcements: exports.buildFileObjectList('./markdown/announcements/'),
+    introductions: exports.buildFileObjectList('./markdown/introductions/'),
+    members: exports.buildFileObjectList('./markdown/members/'),
+  };
+
+  // 写入数据文件到输出文件夹
+  if (!fs.existsSync('./dist/')) {
+    // 输出文件夹不存在，需要创建输出文件夹
+    fs.mkdirSync('./dist/');
+  } else if (fs.existsSync('./dist/data.txt')) {
+    // 输出文件夹存在，则可能 data.txt 也存在，需要删除旧的数据文件之后写入新的
+    fs.unlinkSync('./dist/data.txt');
+  }
+  fs.writeFileSync('./dist/data.txt', JSON.stringify(posts, null, 2));
+
+  if (!fs.existsSync('./dist/files/')) {
+    // 附属文件的存放点不存在，创建之
+    fs.mkdirSync('./dist/files/');
+  }
+  // 复制图片等 files/ 文件夹中的附属文件到输出文件夹的 files/ 中
+  const childrenFolderNames = exports.getTheNameOfAllChildFolders('./markdown/');
+  childrenFolderNames.forEach(function(folderName) {
+    const folderPath = './markdown/' + folderName + '/';
+    const filesNamesToCopy = exports.getTheNameOfAllFiles(folderPath + 'files/');
+    filesNamesToCopy.forEach(function(fileName) {
+      fs.copyFileSync(folderPath + 'files/' + fileName, './dist/files/' + fileName);
+    });
+  });
+};
