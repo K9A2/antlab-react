@@ -54,7 +54,7 @@
     "file-loader": "^4.2.0",
     "for-editor": "^0.3.2",
     "loadsh": "0.0.4",
-    "markdown-it": "^9.1.0",
+    "markdown-it": "^12.3.2",
     "react-markdown-editor-lite": "^0.4.3",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
